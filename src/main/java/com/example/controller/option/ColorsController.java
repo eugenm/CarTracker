@@ -34,8 +34,8 @@ public class ColorsController {
 	@Autowired
 	ColorsRepository repository;
 
-	// read: /api/option/colors (GET)
-	@RequestMapping(value = "/colors", method = RequestMethod.GET)
+	// read: /api/option/colors.json (GET)
+	@RequestMapping(value = "/colors.json", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Map> listAll() {
 		logger.info("Getting all Colors");
 		List<Color> colors = (List<Color>) repository.findAll();
@@ -52,7 +52,7 @@ public class ColorsController {
 		return new ResponseEntity<Map>(body, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "colors/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "colors/{id}.json", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<?> getWithId(@PathVariable Integer id) {
 		logger.info("Getting Color by ID");
 		Color color = repository.findOne(id);
@@ -66,8 +66,8 @@ public class ColorsController {
 		return new ResponseEntity<Color>(color, HttpStatus.OK);
 	}
 
-	// create: /api/option/colors (POST)
-	@RequestMapping(value = "/colors", method = RequestMethod.POST)
+	// create: /api/option/colors.json (POST)
+	@RequestMapping(value = "/colors.json", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Map> create(@RequestBody Color color) {
 		logger.info("Creating new Color");
 		Color newColor = repository.save(color);
@@ -84,8 +84,8 @@ public class ColorsController {
 		return new ResponseEntity<Map>(body, HttpStatus.CREATED);
 	}
 
-	// update: /api/option/colors/{id} (PUT)
-	@RequestMapping(value = "/colors/{id}", method = RequestMethod.PUT)
+	// update: /api/option/colors/{id}.json (PUT)
+	@RequestMapping(value = "/colors/{id}.json", method = RequestMethod.PUT)
 	public ResponseEntity<Map> update(@PathVariable Integer id, @RequestBody Color color) {
 		logger.info("Updateing Color");
 		Color foundColor = repository.findOne(id);
@@ -107,8 +107,8 @@ public class ColorsController {
 		return new ResponseEntity<Map>(body, HttpStatus.OK);
 	}
 
-	// delete: /api/option/colors/{id} (DELETE)
-	@RequestMapping(value = "colors/{id}", method = RequestMethod.DELETE)
+	// delete: /api/option/colors/{id}.json (DELETE)
+	@RequestMapping(value = "colors/{id}.json", method = RequestMethod.DELETE)
 	public ResponseEntity<Map> delete(@PathVariable Integer id) {
 		Color color = repository.findOne(id);
 		Map<String, Object> body = new HashMap();
